@@ -1,0 +1,49 @@
+<%- include('../_layouts/adminheader.ejs') %>
+
+<h2 class="page-title">Categories</h2>
+<a href="/admin/categories/add-category" class="btn btn-primary">Add a new Category</a>
+<br><br>
+<table class="table table-striped sorting">
+
+  <thead>
+    <tr class="home">
+      <th>Category</th>
+      <th>Edit</th>
+      <th>Delete</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% categories.forEach(function(category) { %>
+    <tr id="id_<%= category._id %>" class="<%= category.slug %>">
+      <td>
+        <%= category.title %>
+      </td>
+      <td><a href="/admin/categories/edit-category/<%= category.slug %>">Edit</a></td>
+      <td><a class="confirmDeletion" href="/admin/categories/delete-category/<%= category._id %>">Delete</a></td>
+    </tr>
+    <% }); %>
+  </tbody>
+
+</table>
+<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script>
+  $('tbody').sortable({
+    items: "tr:not('.home')",
+    placeholder: "ui-state-highlight",
+    update: function () {
+      var ids = $('tbody').sortable('serialize');
+      var url = '/admin/category/reorder-pages';
+      // ajax call
+      $.post(url, ids);
+    }
+  });
+</script>
+<script>
+  $('a.confirmDeletion').on('click',function(){
+      if(!confirm('confirm deletion')){
+          return false;
+      }
+  })
+</script>
+<%- include('../_layouts/adminfooter.ejs') %>
