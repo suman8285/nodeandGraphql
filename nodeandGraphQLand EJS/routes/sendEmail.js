@@ -30,7 +30,7 @@ async function sendMail(user,callback){
         source:false, // true for port 465 for all others false
         auth:{
             user:"suman8285@gmail.com",
-            pass:"sharath8285"
+            pass:"*********"
         }
     });
 
